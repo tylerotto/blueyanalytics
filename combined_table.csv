@@ -1,0 +1,155 @@
+number,title,airdate,viewers_for_first_airing,production_order,viewers,season,title_under
+1,The Magic Xylophone,1 October 2018,N/A,5,NA,1,The_Magic_Xylophone
+2,Hospital,2 October 2018,"141,000[1]",29,141000,1,Hospital
+3,Keepy Uppy,3 October 2018,"122,000[2]",19,122000,1,Keepy_Uppy
+4,Daddy Robot,4 October 2018,"177,000[3]",13,177000,1,Daddy_Robot
+5,Shadowlands,5 October 2018,"156,000[4]",15,156000,1,Shadowlands
+6,The Weekend,6 October 2018,"153,000[5]",18,153000,1,The_Weekend
+7,BBQ,7 October 2018,"109,000[6]",23,109000,1,BBQ
+8,Fruitbat,8 October 2018,"169,000[7]",17,169000,1,Fruitbat
+9,Horsey Ride,9 October 2018,"162,000[8]",14,162000,1,Horsey_Ride
+10,Hotel,10 October 2018,"140,000[9]",3,140000,1,Hotel
+11,Bike,11 October 2018,"135,000[10]",12,135000,1,Bike
+12,Bob Bilby,12 October 2018,"177,000[11]",16,177000,1,Bob_Bilby
+13,Spy Game,13 October 2018,"154,000[12]",22,154000,1,Spy_Game
+14,Takeaway,14 October 2018,"159,000[13]",4,159000,1,Takeaway
+15,Butterflies,15 October 2018,"153,000[14]",24,153000,1,Butterflies
+16,Yoga Ball,16 October 2018,"151,000[15]",1,151000,1,Yoga_Ball
+17,Calypso,17 October 2018,"124,000[16]",27,124000,1,Calypso
+18,The Doctor,18 October 2018,"153,000[17]",21,153000,1,The_Doctor
+19,The Claw,19 October 2018,"183,000[18]",6,183000,1,The_Claw
+20,Markets,20 October 2018,"120,000[19]",26,120000,1,Markets
+21,Blue Mountains,21 October 2018,"155,000[20]",20,155000,1,Blue_Mountains
+22,The Pool,22 October 2018,"139,000[21]",8,139000,1,The_Pool
+23,Shops,23 October 2018,"155,000[22]",25,155000,1,Shops
+24,Wagon Ride,24 October 2018,"120,000[23]",9,120000,1,Wagon_Ride
+25,Taxi,25 October 2018,"153,000[24]",11,153000,1,Taxi
+26,The Beach,26 October 2018,"157,000[25]",10,157000,1,The_Beach
+27,Pirates,1 April 2019,"166,000[26]",49,166000,1,Pirates
+28,Grannies,2 April 2019,"214,000[27]",40,214000,1,Grannies
+29,The Creek,3 April 2019,"189,000[28]",32,189000,1,The_Creek
+30,Fairies,4 April 2019,"194,000[29]",43,194000,1,Fairies
+31,Work,5 April 2019,"198,000[30]",37,198000,1,Work
+32,Bumpy and the Wise Old Wolfhound,6 April 2019,"196,000[31]",34,196000,1,Bumpy_and_the_Wise_Old_Wolfhound
+33,Trampoline,7 April 2019,"261,000[32]",31,261000,1,Trampoline
+34,The Dump,8 April 2019,"233,000[33]",50,233000,1,The_Dump
+35,Zoo,9 April 2019,"217,000[34]",41,217000,1,Zoo
+36,Backpackers,10 April 2019,"257,000[35]",28,257000,1,Backpackers
+37,The Adventure,11 April 2019,"243,000[36]",46,243000,1,The_Adventure
+38,Copycat,12 April 2019,"313,000[37]",48,313000,1,Copycat
+39,The Sleepover,13 April 2019,"191,000[38]",47,191000,1,The_Sleepover
+40,Early Baby,14 April 2019,"255,000[39]",35,255000,1,Early_Baby
+41,Mums and Dads,15 April 2019,"231,000[40]",44,231000,1,Mums_and_Dads
+42,Hide and Seek,16 April 2019,"229,000[41]",39,229000,1,Hide_and_Seek
+43,Camping,17 April 2019,"270,000[42]",51,270000,1,Camping
+44,Mount Mumandad,18 April 2019,"261,000[43]",30,261000,1,Mount_Mumandad
+45,Kids,19 April 2019,"269,000[44]",38,269000,1,Kids
+46,Chickenrat,20 April 2019,"242,000[45]",7,242000,1,Chickenrat
+47,Neighbours,21 April 2019,"195,000[46]",33,195000,1,Neighbours
+48,Teasing,22 April 2019,"187,000[47]",2,187000,1,Teasing
+49,Asparagus,23 April 2019,"157,000[48]",42,157000,1,Asparagus
+50,Shaun,24 April 2019,"172,000[49]",36,172000,1,Shaun
+51,Daddy Putdown,25 April 2019,"149,000[50]",45,149000,1,Daddy_Putdown
+52,Verandah Santa,12 December 2019,"207,000[51]",52,207000,1,Verandah_Santa
+1,Dance Mode,17 March 2020,"458,000[52]",20,458000,2,Dance_Mode
+2,Hammerbarn,18 March 2020,"338,000[53]",17,338000,2,Hammerbarn
+3,Featherwand,19 March 2020,"381,000[54]",16,381000,2,Featherwand
+4,Squash,20 March 2020,"351,000[55]",5,351000,2,Squash
+5,Hairdressers,21 March 2020,"361,000[56]",1,361000,2,Hairdressers
+6,Stumpfest,22 March 2020,"343,000[57]",8,343000,2,Stumpfest
+7,Favourite Thing,23 March 2020,"303,000[58]",3,303000,2,Favourite_Thing
+8,Daddy Dropoff,24 March 2020,"192,000[59]",15,192000,2,Daddy_Dropoff
+9,Bingo,25 March 2020,"195,000[60]",18,195000,2,Bingo
+10,Rug Island,26 March 2020,"191,000[61]",7,191000,2,Rug_Island
+11,Charades,27 March 2020,"310,000[62]",2,310000,2,Charades
+12,Sticky Gecko,28 March 2020,"206,000[63]",4,206000,2,Sticky_Gecko
+13,Dad Baby,29 March 2020,"370,000[64]",19,370000,2,Dad_Baby
+14,Mum School,30 March 2020,"277,000[65]",6,277000,2,Mum_School
+15,Trains,31 March 2020,"312,000[66]",9,312000,2,Trains
+16,Army,1 April 2020,"329,000[67]",12,329000,2,Army
+17,Fancy Restaurant,2 April 2020,"356,000[68]",10,356000,2,Fancy_Restaurant
+18,Piggyback,3 April 2020,"403,000[69]",14,403000,2,Piggyback
+19,The Show,4 April 2020,"352,000[70]",13,352000,2,The_Show
+20,Tickle Crabs,5 April 2020,"345,000[71]",11,345000,2,Tickle_Crabs
+21,Escape,6 April 2020,"420,000[72]",23,420000,2,Escape
+22,Bus,7 April 2020,"356,000[73]",24,356000,2,Bus
+23,Queens,8 April 2020,"297,000[74]",22,297000,2,Queens
+24,Flat Pack,9 April 2020,"356,000[75]",21,356000,2,Flat_Pack
+25,Helicopter,10 April 2020,"338,000[76]",25,338000,2,Helicopter
+26,Sleepytime,11 April 2020,"376,000[77]",26,376000,2,Sleepytime
+27,Grandad,25 October 2020,"227,000[78]",42,227000,2,Grandad
+28,Seesaw,26 October 2020,"404,000[79]",29,404000,2,Seesaw
+29,Movies,27 October 2020,"383,000[80]",46,383000,2,Movies
+30,Library,28 October 2020,"343,000[81]",38,343000,2,Library
+31,Barky Boats,29 October 2020,"388,000[82]",33,388000,2,Barky_Boats
+32,Burger Shop,30 October 2020,"389,000[83]",36,389000,2,Burger_Shop
+33,Circus,31 October 2020,"437,000[84]",27,437000,2,Circus
+34,Swim School,1 November 2020,"424,000[85]",39,424000,2,Swim_School
+35,Cafe,2 November 2020,"341,000[86]",52,341000,2,Cafe
+36,Postman,3 November 2020,"396,000[87]",32,396000,2,Postman
+37,The Quiet Game,4 November 2020,"414,000[88]",49,414000,2,The_Quiet_Game
+38,Mr Monkeyjocks,5 November 2020,"397,000[89]",31,397000,2,Mr_Monkeyjocks
+39,Double Babysitter,6 November 2020,"314,000[90]",48,314000,2,Double_Babysitter
+40,Bad Mood,7 November 2020,"368,000[91]",43,368000,2,Bad_Mood
+41,Octopus,8 November 2020,"392,000[92]",44,392000,2,Octopus
+42,Bin Night,9 November 2020,"374,000[93]",34,374000,2,Bin_Night
+43,Muffin Cone,10 November 2020,"382,000[94]",45,382000,2,Muffin_Cone
+44,Duck Cake,11 November 2020,"416,000[95]",30,416000,2,Duck_Cake
+45,Handstand,12 November 2020,"331,000[96]",28,331000,2,Handstand
+46,Road Trip,13 November 2020,"214,000[97]",50,214000,2,Road_Trip
+47,Ice Cream,14 November 2020,"218,000[98]",40,218000,2,Ice_Cream
+48,Dunny,15 November 2020,"204,000[99]",41,204000,2,Dunny
+49,Typewriter,16 November 2020,"226,000[100]",35,226000,2,Typewriter
+50,Baby Race,17 November 2020,"459,000[101]",37,459000,2,Baby_Race
+51,Christmas Swim,1 December 2020,"414,000[102]",51,414000,2,Christmas_Swim
+52,Easter,4 April 2021,"607,000[103]",47,607000,2,Easter
+1,Perfect,5 September 2021,"459,000[104]",3,459000,3,Perfect
+2,Bedroom,22 November 2021,"364,000[105]",1,364000,3,Bedroom
+3,Obstacle Course,23 November 2021,"287,000[106]",7,287000,3,Obstacle_Course
+4,Promises,24 November 2021,"352,000[107]",23,352000,3,Promises
+5,Omelette,25 November 2021,"298,000[108]",11,298000,3,Omelette
+6,Born Yesterday,26 November 2021,"349,000[109]",5,349000,3,Born_Yesterday
+7,Mini Bluey,27 November 2021,"452,000[110]",24,452000,3,Mini_Bluey
+8,Unicorse,28 November 2021,"402,000[111]",2,402000,3,Unicorse
+9,Curry Quest,29 November 2021,"323,000[112]",6,323000,3,Curry_Quest
+10,Magic,30 November 2021,"354,000[113]",22,354000,3,Magic
+11,Chest,1 December 2021,"343,000[114]",4,343000,3,Chest
+12,Sheepdog,2 December 2021,"281,000[115]",19,281000,3,Sheepdog
+13,Housework,3 December 2021,"302,000[116]",8,302000,3,Housework
+14,Pass the Parcel,4 December 2021,"369,000[117]",9,369000,3,Pass_the_Parcel
+15,Explorers,5 December 2021,"305,000[118]",21,305000,3,Explorers
+16,Phones,6 December 2021,"338,000[119]",13,338000,3,Phones
+17,Pavlova,7 December 2021,"357,000[120]",10,357000,3,Pavlova
+18,Rain,8 December 2021,"258,000[121]",26,258000,3,Rain
+19,Pizza Girls,9 December 2021,"319,000[122]",25,319000,3,Pizza_Girls
+20,Driving,10 December 2021,"284,000[123]",17,284000,3,Driving
+21,Tina,11 December 2021,"401,000[124]",20,401000,3,Tina
+22,Whale Watching,12 December 2021,"312,000[125]",18,312000,3,Whale_Watching
+23,Family Meeting,13 December 2021,"334,000[126]",14,334000,3,Family_Meeting
+24,Faceytalk,14 December 2021,"414,000[127]",12,414000,3,Faceytalk
+25,Ragdoll,15 December 2021,"330,000[128]",16,330000,3,Ragdoll
+26,Fairytale,16 December 2021,"317,000[129]",15,317000,3,Fairytale
+27,Musical Statues,13 June 2022,"489,000[130]",31,489000,3,Musical_Statues
+28,Stories,14 June 2022,"464,000[131]",34,464000,3,Stories
+29,Puppets,15 June 2022,"418,000[132]",30,418000,3,Puppets
+30,Turtleboy,16 June 2022,"415,000[133]",38,415000,3,Turtleboy
+31,Onesies,17 June 2022,"378,000[134]",44,378000,3,Onesies
+32,Tradies,18 June 2022,"289,000[135]",35,289000,3,Tradies
+33,Granny Mobile,19 June 2022,"286,000[136]",28,286000,3,Granny_Mobile
+34,Space,20 June 2022,"320,000[137]",27,320000,3,Space
+35,Smoochy Kiss,21 June 2022,"349,000[138]",33,349000,3,Smoochy_Kiss
+36,Dirt,22 June 2022,"398,000[139]",45,398000,3,Dirt
+37,The Decider,23 June 2022,"437,000[140]",41,437000,3,The_Decider
+38,Cubby,9 April 2023,"445,000[141]",46,445000,3,Cubby
+39,Exercise,16 April 2023,"528,000[142]",36,528000,3,Exercise
+40,Relax,23 April 2023,"509,000[143]",32,509000,3,Relax
+41,Stickbird,30 April 2023,"510,000[144]",29,510000,3,Stickbird
+42,Show And Tell,7 May 2023,"458,000[145]",43,458000,3,Show_And_Tell
+43,Dragon,14 May 2023,"562,000[146]",47,562000,3,Dragon
+44,Wild Girls,21 May 2023,"492,000[147]",42,492000,3,Wild_Girls
+45,TV Shop,28 May 2023,"534,000[148]",49,534000,3,TV_Shop
+46,Slide,4 June 2023,"529,000[149]",40,529000,3,Slide
+47,Cricket,11 June 2023,"563,000[150]",39,563000,3,Cricket
+48,The Sign,TBA 2024[151],Episode yet to air,Episode yet to air,NA,3,The_Sign
+49,Ghost Basket,TBA,Episode yet to air,Episode yet to air,NA,3,Ghost_Basket
+50,Surprise!,TBA,Episode yet to air,Episode yet to air,NA,3,Surprise!

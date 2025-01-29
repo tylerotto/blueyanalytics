@@ -10,12 +10,17 @@ url <- "https://blueypedia.fandom.com/wiki/Episode_List"
 webpage <- read_html(url)
 
 # Extract the tables from the webpage
-tables <- html_table(webpage)
+tables <- html_table(webpage) 
+
 
 # Filter out the first two tables
 filtered_tables <- tables %>%
-  discard(~ identical(., tables[[1]]) || identical(., tables[[2]]))
-
+  discard(~ identical(., tables[[1]]) || identical(., tables[[2]])) %>% 
+  map_dfr(~{
+    colnames(.x) <- c("#", "Title", "Airdate", "Premier Viewers", "viewers_for_first_airing")
+    .x
+  }) %>%
+  clean_names()
 
 # Since html_table returns a list of data frames, you might need to access the first element
 # Assuming you want to combine all tables from the page, you can use bind_rows
@@ -29,7 +34,9 @@ combined_table <- bind_rows(filtered_tables) %>%
   mutate(season = cumsum(number  < lag(number , default = first(number))) + 1) %>% 
   mutate(title_under = gsub(" ", "_", title)) 
   
-write_csv(combined_table, "combined_table.csv")
+# write_csv(combined_table, "combined_table_new.csv")
+
+combined_table <- read_csv("tidy_episodes.csv")
 
 # list of episodes
 
