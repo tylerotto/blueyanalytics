@@ -1,42 +1,48 @@
 ---
 title: "Bluey Text Analysis"
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
 author: "Tyler Otto"
-format: html
-editor: visual
-editor_options: 
-  chunk_output_type: inline
-output: 
-  html_document:
-    toc: yes
-    toc_float:
-      collapsed: true
+format:
+  html: 
+    grid:
+      body-width: 1000px
+engine: knitr
+knitr:
+  opts_chunk: 
+    R.options:
+      width: 900
+theme: zephyr
 ---
 
 ## This Episode of Bluey is Called: *Text Analysis*
 
-![](images/blueyfamily.jpeg){fig-align="center"}
+A big thanks to the tidytext package and their documentation for the inspiration to do this project. <https://www.tidytextmining.com/tidytext.html>
 
+As a parent of 3 young kids, the show "Bluey", has a special place in my family's heart. Each episode is only 7 minutes, yet manages to tell a complete, engaging story with heartwarming moments. It blends heartwarming storytelling, realistic parenting, and humor that appeals to both kids and adults (not to mention the fantastic soundtrack). It might sound like hyperbole, but I'd be a worse parent without this show. I'll share some great articles that summarise the show better than I will.
 
+-   <https://www.upworthy.com/what-makes-bluey-such-a-great-tv-show-ex1>
 
+-   <https://www.vulture.com/article/bluey-best-kids-tv-show.html>
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+This project has been on my list to do for a while now and I wanted to dig into the character's dialogue and practice my skills in text analysis.
 
-## libraries
+## List of Libraries Used and What They Do
 
-library(tidyverse)
-library(rvest)
-library(janitor)
-library(tidytext)
-library(ggimage)
-library(gt)
-library(gtExtras)
-library(ggtext)
+![](images/blueyfamily.jpeg){fig-align="center" width="500"}
 
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 
+library(tidyverse) ## data wrangling and visualization
+library(rvest) ## webscraping 
+library(janitor) ## the most underrated package
+library(tidytext) ## tokenize your data
+library(ggimage) ## being extra in ggplot
+library(gt) ## makes beautiful tables
+library(gtExtras) ## makes beautiful tables
+library(ggtext) ## being extra in ggplot
+library(syuzhet) ## sentiment analysis package
 
 ```
-
-
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
@@ -87,8 +93,6 @@ combined_table <- bind_rows(tables) %>%
 
 
 ```
-
-
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 # combined_table <- read_csv("tidy_episodes.csv") %>% 
@@ -171,12 +175,6 @@ combined_table <- bind_rows(tables) %>%
 
 ```
 
-
-
-
-
-
-
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
 ## get character images
@@ -194,11 +192,7 @@ character_images <- tibble(
 
 ```
 
-
-
-
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r message=FALSE, warning=FALSE, include=FALSE, fig.width = 8}
 
 ### Extra Munging
 
@@ -240,9 +234,35 @@ character_images <- tibble(
 
 ```
 
+## Result from Rvest Web Scraping
+
+We finally have where reach row defines every word spoken in Bluey, by season and character. Fun table search functionality in \*reactable\* below. For example, "What what the episode Muffin says 'Coconuts have water in them!', search for coconuts and see!
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 8}
+library(reactable)
+## https://en.wikipedia.org/wiki/List_of_Bluey_episodes
+
+## https://blueypedia.fandom.com/wiki/The_Magic_Xylophone/Script
+
+gt_table <- gt(tidy_episodes) %>%
+  tab_header(title = "Bluey Script - Word Tokenization")  # Add a title
+
+# Convert gt table to a paginated reactable
+reactable(
+  tidy_episodes,
+  pagination = TRUE,  # Enable pagination
+  defaultPageSize = 5,  # Set number of rows per page
+  searchable = TRUE,  # Add search box
+  bordered = TRUE,  # Add borders
+  highlight = TRUE   # Highlight rows on hover
+)
+```
+
 ## Most Words Spoken (No Stop Words Removed)
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+Some quick analysis on the raw data shows that, to no one's surprise, that Bluey leads the way in words spoken followed by her dad and sister.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 8}
 
 mystopwords <- tibble(word = c("hey",
                             'called',
@@ -295,13 +315,90 @@ ggsave("C:/Users/tyler/OneDrive/Desktop/blueyanalytics/Word_Count_per_Character.
 
 ```
 
+## Ranked Bump Chart by Character and Season
+
+Awesome to see a proxy of screen time through the word counts. Pat (Lucky's dad) makes a huge leap in season 3 where he gets to play cricket, host birthday parties, and watch rugby with his family. The general trend shows that the kids get less lines as the seasons progress and the parents lines grow.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 10, fig.height=8}
+
+custom_colors_all <- c(
+  "Bandit" = "blue",
+  "Bingo" = "wheat2",
+  "Bluey" = "lightblue",
+  "Chilli" = "darkorange",
+  "Muffin" = "darkgrey",
+  "Indy" = "#F2A7C4",  # Indy - Light pinkish-red
+  "Mackenzie" = "#000000",  # Mackenzie - Black and white (border collie)
+  "Chloe" = "#D1C8B0",  # Chloe - White with black spots (Dalmatian)
+  "Rusty" = "#6B4C3B",  # Rusty - Brown
+  "Pat" = "#5C2F1E",  # Pat - Dark brown
+  "Stripe" = "#4C4B87",  # Stripe - Dark purple
+  "Jack" = "#4A8E0B"   # Jack - Dark green
+)
 
 
+top_n_list <-  tidy_episodes %>% 
+  count(Character , sort = TRUE) %>% 
+  top_n(12) %>% 
+  pull(Character)
 
+tidy_episodes_count <- tidy_episodes %>%  
+  filter(Character %in% top_n_list) %>%
+  count(Character, season, sort = TRUE) %>% 
+  left_join(character_images, by = "Character") %>% 
+  group_by(season) %>%  # Group by season
+  mutate(rank = as.integer(rank(-n))) %>%  # Create a non-integer rank based on count, reversed
+  ungroup() 
+
+
+library(ggrepel)
+
+# Filter for the last data point of each character
+last_points <- tidy_episodes_count %>%
+  group_by(Character) %>%
+  filter(season == max(season)) %>%
+  ungroup()
+
+Ranked_Bump_Chart <- ggplot(tidy_episodes_count,
+                            aes(x = season,
+                                y = rank, group = Character, color = Character)) +
+  geom_line(size = 1.5) + 
+  geom_point(size = 3) +
+  geom_text_repel(
+    data = last_points, 
+    aes(label = Character), 
+    color = "black", 
+    vjust = -0.5, 
+    box.padding = 0.5,  # Adjust label distance from points
+    force_pull = 0.5,   # Prevent text overlap
+    point.padding = 0.5  # Adjust point padding to space out the labels
+  ) +
+  scale_y_reverse() +  # Reverse the y-axis to show higher ranks at the top
+  theme_minimal() +
+  scale_color_manual(values = custom_colors_all) +  # Apply custom colors to the lines and points
+  labs(title = "Ranked Bump Chart by Character and Season",
+       x = "Season", y = "Rank") +
+  theme(axis.text.x = element_text( hjust = 1, size =14),
+        axis.text.y = element_blank(),
+        panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),
+        legend.position = "none"
+        )  # Remove y-axis labels
+
+Ranked_Bump_Chart
+
+ggsave("C:/Users/tyler/OneDrive/Desktop/blueyanalytics/Ranked_Bump_Chart.png", Ranked_Bump_Chart, width = 10, height = 6, dpi = 300)
+
+
+```
 
 ## Top Words Used by Each Character
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+It's a great feeling with data corroborates your guess. If I had to guess Bingo and Bluey's top words it would be each other first and then their dad and mum, and behold!\
+\
+Classic bossy muffin with a top word of 'stop'.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 8}
 
 mystopwords <- tibble(word = c("hey",
                             'called',
@@ -353,9 +450,14 @@ Top_Words_Used_by_Each_Character_All
 ggsave("C:/Users/tyler/OneDrive/Desktop/blueyanalytics/Top_Words_Used_by_Each_Character_All.png", Top_Words_Used_by_Each_Character_All, width = 10, height = 6, dpi = 300)
 
 ```
+
 ## Top Words Used by Each Character (Remove Character Names)
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+I'm going to remove character names, a few more stop words, words like 'episode' and 'offscreen' for descriptions that got caught in the script and see if we can gather more personality.\
+\
+Also, is that the characters in the plot - for real life?! I had some fun with 'geom_image' to put the characters in the plot. Super cool.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.width = 8}
 
 
 mystopwords <- tibble(word = c("hey",
@@ -410,7 +512,6 @@ Top_Words_Used_by_Each_Character
 ggsave("C:/Users/tyler/OneDrive/Desktop/blueyanalytics/Top_Words_Used_by_Each_Character.png", Top_Words_Used_by_Each_Character, width = 10, height = 6, dpi = 300)
 ```
 
-
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(syuzhet)
 
@@ -460,7 +561,11 @@ sentiment_summary_epi_num <- sentiment_df %>%
 
 ## Character Sentiment By Season
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+Finally, let's assign positive or negative values (some smaller or bigger than others) to each word spoken. We do this by importing the AFINN lexicon (<http://corpustext.com/reference/sentiment_afinn.html>). For example, amazing gets a score of +4 and bad gets a score of -3.
+
+We get to see the young characters of Bingo and Muffin grow and mature in their positive sentiment scores in season 3. We also don't get much character development from Chilli (Mum) in season 1 (more happy go lucky), but in season 2 and 3 we get to see her past struggles as a parent (still overall positive).
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.width = 10, fig.height=8}
 
 mystopwords <- tibble(word = c("hey",
                             'called',
@@ -501,7 +606,7 @@ Character_Sentiment_by_Season <- ggplot(sentiment_summary_with_images, aes(x = s
     data = sentiment_summary_with_images %>%
       group_by(Character) %>%
       slice_tail(n = 1), # Get only the last point for each character
-    size = 0.1, 
+    size = 0.05, 
     inherit.aes = FALSE,  # Do not inherit aesthetics from the main plot
     # position = position_nudge(x = 0.1, y = 0.1)  # Add slight offset to avoid overlap
   ) +
@@ -523,22 +628,10 @@ ggsave("C:/Users/tyler/OneDrive/Desktop/blueyanalytics/Character_Sentiment_by_Se
 
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
-
-ggplot(sentiment_summary, aes(x = factor(season), y = Character, fill = avg_sentiment)) +
-  geom_tile(color = "white") +
-  scale_fill_gradient2(low = "red", high = "darkgreen", mid = "white", midpoint = 0, 
-                       limit = c(min(sentiment_summary$avg_sentiment), max(sentiment_summary$avg_sentiment)),
-                       space = "Lab", name="Sentiment") +
-  theme_minimal() +
-  labs(title = "Character Sentiment Heatmap by Season", 
-       x = "Season", 
-       y = "Character")
+```{r message=FALSE, warning=FALSE, include=FALSE, fig.width = 8}
 
 
 ```
-
-
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 

@@ -1,0 +1,4 @@
+- source: Bluey Text Analysis.qmd
+  quarto-pub:
+    - id: 4c103269-0cf0-4757-a02e-46b2423d9209
+      url: 'https://tylerotto.quarto.pub/bluey-text-analysis'
