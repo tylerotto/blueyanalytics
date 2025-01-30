@@ -40,10 +40,15 @@ combined_table <- bind_rows(tables) %>%
   mutate(australian_viewers =  as.numeric(str_extract(australian_viewers, "^[0-9,]+") %>%
            str_replace_all(",", "") 
             )
-         )%>% 
+         )%>%
+  mutate(no_inseries = as.numeric(no_inseries)) %>% 
   mutate(title = gsub(" ", "_", title)) %>% 
-  mutate(title = str_replace_all(title, '"', ""))
-  
+  mutate(title = str_replace_all(title, '"', "")) %>% 
+  mutate(season = cumsum(no_inseries < lag(no_inseries , default = first(no_inseries))) + 1) %>% 
+  mutate(title =  str_replace(title, "Magic_Xylophone", "The_Magic_Xylophone"))
+
+
+glimpse(combined_table)  
 # write_csv(combined_table, "combined_table_new.csv")
 
 combined_table <- read_csv("tidy_episodes.csv")
@@ -61,7 +66,7 @@ addtional_episodes <-  c("Calypso_(Episode)", "Bingo_(Episode)")
 
 episode_names <-  c(episode_names, addtional_episodes)
 
-episode_names <- str_replace(episode_names, "Magic_Xylophone", "The_Magic_Xylophone")
+
 
 # str(episode_names)
 # str(addtional_episodes)
@@ -125,75 +130,88 @@ for (episode_name in episode_names) {
 # View the resulting data frame
 print(head(script_df))
 
+tidy_episodes <- read_csv("tidy_episodes.csv") %>% 
+  mutate(Character = str_trim(Character))
 
 ### time to manipulate our data to get a word for each row
 
-script_df <- as_tibble(script_df)
 
-library(tidytext)
 
-tidy_episodes_new <- script_df %>% 
-  unnest_tokens(word, Dialogue) %>% 
-  anti_join(stop_words) %>% 
-  left_join(combined_table %>% select(season, title_under)
-            , by = c('Episode'= 'title_under')) %>% 
-  relocate(season) 
+
+
 
 check <- tidy_episodes %>% 
   group_by(Character) %>% 
   tally(sort= T)
 
-tidy_episodes %>% 
-  count(word, Character , sort = TRUE) %>%
-  filter(n > 50) %>%
-  mutate(word = reorder(word, n)) %>%
-  ggplot(aes(n, word)) +
-  geom_col() +
-  labs(y = NULL) +
-  facet_wrap(vars(Character )) 
-  
 
 # write_csv(tidy_episodes, "tidy_episodes.csv")
 
-tidy_episodes <- read_csv("tidy_episodes.csv")
+## top 5 list
+top_5_list <-  tidy_episodes %>% 
+  count(Character , sort = TRUE) %>% 
+  top_n(5) %>% 
+  pull(Character)
+
+#more word removal
+
+mystopwords <- tibble(word = c("hey","yeah",'ah','uh','voiceover'))
+mystopwords <- tibble(word = c("hey","yeah",'ah','uh','um','doo','voiceover','bingo','bluey','dad','mum','ooh','kids','choop'))
 
 
-# Visualizations
-library(syuzhet)
+## get character images
+library(ggimage)
 
-count <- tidy_episodes %>% 
-  count(word, Character , sort = TRUE) %>%
-  filter(n > 50) %>%
-  mutate(word = reorder(word, n))
+character_images <- tibble(
+  Character = c("Bandit", "Bingo", "Bluey", "Chilli", "Muffin"),
+  image_url = c(
+    "https://static.wikia.nocookie.net/blueypedia/images/e/e6/Cleanupdad.png/revision/latest?cb=20240219204742",
+    "https://static.wikia.nocookie.net/blueypedia/images/d/d3/Bingo_stock_pose.png/revision/latest?cb=20230911045555",
+    "https://static.wikia.nocookie.net/blueypedia/images/b/b3/Bluey_stock_pose.png/revision/latest?cb=20230910153710",
+    "https://static.wikia.nocookie.net/blueypedia/images/4/4b/Chilli_Profile_-_Season_3%2B_Design.png/revision/latest?cb=20230529193849",
+    "https://static.wikia.nocookie.net/blueypedia/images/7/7c/Muffin_1.png/revision/latest?cb=20231114131650"
+  )
+)
 
-ggplot(count, aes(x = word, y = n, size = n)) +
-  geom_point(alpha = 0.7) +
+### create bar chart
+library(ggtext)
+
+tidy_episodes %>%  
+  filter(Character %in% top_5_list) %>% 
+  anti_join(stop_words) %>%  
+  anti_join(mystopwords) %>% 
+  count(Character, word, sort = TRUE) %>%  
+  group_by(Character) %>%
+  slice_max(n, n = 5) %>%  
+  ungroup() %>%
+  mutate(Character = factor(Character, levels = top_5_list)) %>%  
+  ggplot(aes(x = reorder_within(word, n, Character), y = n, fill = Character)) +  
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ Character, scales = "free_y", 
+             labeller = labeller(Character = function(x) paste0("**", x, "**"))) +  # Bold the facet labels
+  coord_flip() +
+  scale_x_reordered() + 
   theme_minimal() +
-  labs(title = "Word Frequency Bubble Chart", 
-       x = "Words", 
-       y = "Frequency") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-# Tokenize and count word frequencies by character and season
-word_freq_by_season <- tidy_episodes %>%
-  count(Character, season, word, sort = TRUE)
+  theme(panel.grid.major = element_blank(),  # Remove major grid lines
+        panel.grid.minor = element_blank(),
+        strip.text = element_markdown()) +  # Apply markdown for bolding
+  labs(title = "Top Words Used by Each Character", x = "", y = "Word Count") +
+  geom_image(data = character_images, aes(x = 1, y = 20, image = image_url), 
+             size = 0.3, inherit.aes = FALSE)  # Adjust y position manually
 
 # Sentiment analysis on words spoken by each character per season
-library(syuzhet)  
+library(syuzhet)
+library(tidytext)
 
 # Positive Sentiment: Values above 0 represent positive emotions like happiness or excitement.
 # Negative Sentiment: Values below 0 represent negative emotions like sadness or anger.
 
-sentiments <- get_sentiment(script_df$Dialogue, method = "syuzhet")
+sentiments <- get_sentiment(tidy_episodes$word, method = "afinn")
 
-script_df$sentiment <- sentiments
+tidy_episodes$sentiment <- sentiments
 
-sentiment_df <- script_df %>% 
-  unnest_tokens(word, Dialogue) %>% 
+sentiment_df <- tidy_episodes %>% 
   anti_join(stop_words) %>% 
-  left_join(combined_table %>% select(season, title_under)
-            , by = c('Episode'= 'title_under')) %>% 
-  relocate(season) %>% 
   mutate(Character = gsub("^\\(.*?\\)\\s*", "", Character),
          Character = str_replace_all(Character, "[^A-Za-z0-9\\s]", ""))
 
@@ -230,7 +248,7 @@ ggplot(sentiment_summary, aes(x = season, y = avg_sentiment, color = Character, 
 
 ggplot(sentiment_summary, aes(x = factor(season), y = Character, fill = avg_sentiment)) +
   geom_tile(color = "white") +
-  scale_fill_gradient2(low = "red", high = "green", mid = "white", midpoint = 0, 
+  scale_fill_gradient2(low = "red", high = "darkgreen", mid = "white", midpoint = 0, 
                        limit = c(min(sentiment_summary$avg_sentiment), max(sentiment_summary$avg_sentiment)),
                        space = "Lab", name="Sentiment") +
   theme_minimal() +
@@ -238,27 +256,7 @@ ggplot(sentiment_summary, aes(x = factor(season), y = Character, fill = avg_sent
        x = "Season", 
        y = "Character")
 
-# Specify the URL
-url2 <- "https://www.imdb.com/title/tt7678620/ratings/?ref_=tt_ov_rt"
 
-# Read the HTML content of the webpage
-webpage2 <- read_html(url2)
-
-# Extract the tables from the webpage
-tables2 <- webpage2 %>%
-  html_table(fill = TRUE)
-
-
-# Filter out the first two tables
-filtered_tables2 <- tables2 %>%
-  discard(~ identical(., tables2[[1]])) %>% 
-  # map_dfr(~{
-  #   colnames(.x) <- c("#", "Title", "Airdate", "Premier Viewers", "viewers_for_first_airing")
-  #   .x
-  # }) %>%
-  # clean_names()
-  
-  
   
   
   
